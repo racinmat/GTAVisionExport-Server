@@ -68,8 +68,9 @@ def index():
 @app.route('/commands', methods=['POST'])
 def add_command():
     data = request.get_json()
-    print(data)
-    return jsonify({'class': 0}), 200
+    print(data['command'])
+    q.put(data['command'])
+    return '', 200
 
 
 @app.route('/commands', methods=['GET'])

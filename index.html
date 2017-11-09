@@ -27,7 +27,8 @@
 
 <div class="container theme-showcase" role="main">
 
-    <div class="alert alert-success" id="command-sent" role="alert" style="display:none;">hello</div>
+    <div id="alerts"></div>
+
 
     <button type="button" class="btn btn-primary" id="START_SESSION">START_SESSION</button>
     <button type="button" class="btn btn-primary" id="STOP_SESSION">STOP_SESSION</button>
@@ -72,15 +73,27 @@
     (function () {
         axios.defaults.baseURL = 'http://localhost:5000';
 
-        Array.from(document.getElementsByTagName('button')).forEach(function (element) {
+        $('button').each(function (i, element) {
             element.onclick = function (e) {
                 var text = this.id;
                 console.log(text);
                 axios.post('/commands', {
                     'command': text
                 }).then(function (res) {
-                    $('#command-sent').html(text + ' command sent');
-                    $('#command-sent').fadeIn();
+                    console.log('obtained response');
+                    var id = Math.random().toString(36).substring(7);
+                    var alertHtml = '<div class="alert alert-success alert-dismissable" role="alert">' +
+                        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><span></span>' +
+                        '</div>';
+                    var html = $($.parseHTML(alertHtml)[0]);
+                    html.attr('id', id);
+                    html.find('span').html(text + ' command sent');
+                    $('#alerts').append(html);
+                    console.log(html);
+                    console.log($('#' + id));
+                    $('#' + id).fadeTo(2000, 500).slideUp(500, function () {
+                        $("#success-alert").slideUp(500);
+                    })
                 }).catch(function (err) {
                     $('#command-sent').className = 'alert alert-danger';
                     $('#command-sent').innerHTML = err.message;
