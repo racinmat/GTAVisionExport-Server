@@ -2,7 +2,8 @@ import queue
 import socket
 import threading
 import time
-from flask import Flask, request, abort, jsonify
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 
 class ThreadedSocketServer:
@@ -56,24 +57,27 @@ def main():
 
 
 app = Flask(__name__)
-
-if __name__ == '__main__':
-    q = queue.Queue()
-    main()
+CORS(app)
 
 
 @app.route('/', methods=['GET'])
 def index():
-    return open('buttons.html', 'r').read()
+    return 'this is python socket server', 200
 
 
 @app.route('/commands', methods=['POST'])
-def classify():
+def add_command():
     data = request.get_json()
+    print(data)
     return jsonify({'class': 0}), 200
 
 
 @app.route('/commands', methods=['GET'])
-def classify():
-    return 'send commands here by post'
+def commands():
+    return 'send commands here by post', 200
+
+
+if __name__ == '__main__':
+    q = queue.Queue()
+    main()
 

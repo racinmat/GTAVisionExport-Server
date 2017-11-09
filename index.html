@@ -27,6 +27,8 @@
 
 <div class="container theme-showcase" role="main">
 
+    <div class="alert alert-success" id="command-sent" role="alert" style="display:none;">hello</div>
+
     <button type="button" class="btn btn-primary" id="START_SESSION">START_SESSION</button>
     <button type="button" class="btn btn-primary" id="STOP_SESSION">STOP_SESSION</button>
     <button type="button" class="btn btn-primary" id="TOGGLE_AUTODRIVE">TOGGLE_AUTODRIVE</button>
@@ -70,25 +72,20 @@
     (function () {
         axios.defaults.baseURL = 'http://localhost:5000';
 
-        var buttons = document.getElementsByTagName('button');
         Array.from(document.getElementsByTagName('button')).forEach(function (element) {
-            console.log(element.id);
-            var data = new FormData();
-            data.append('foo', 'bar');
-            var config = {
-                onUploadProgress: function (progressEvent) {
-                    var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                }
-            };
-            axios.post('/commands', data, config)
-                .then(function (res) {
-                    output.className = 'container';
-                    output.innerHTML = res.data;
-                })
-                .catch(function (err) {
-                    output.className = 'container text-danger';
-                    output.innerHTML = err.message;
+            element.onclick = function (e) {
+                var text = this.id;
+                console.log(text);
+                axios.post('/commands', {
+                    'command': text
+                }).then(function (res) {
+                    $('#command-sent').html(text + ' command sent');
+                    $('#command-sent').fadeIn();
+                }).catch(function (err) {
+                    $('#command-sent').className = 'alert alert-danger';
+                    $('#command-sent').innerHTML = err.message;
                 });
+            };
         });
     })();
 </script>
