@@ -72,16 +72,16 @@
 <script>
     function create_alert(text, type) {
         var id = Math.random().toString(36).substring(7);
-        var alertHtml = '<div class="alert alert-' + type + ' alert-dismissable" role="alert">' +
+        var alertHtml = '<div class="alert alert-' + type + ' alert-dismissable" role="alert" style="display: none">' +
             '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a><span></span>' +
             '</div>';
         var html = $($.parseHTML(alertHtml)[0]);
         html.attr('id', id);
         html.find('span').html(text);
         $('#alerts').append(html);
-        $('#' + id).fadeTo(2000, 500).slideUp(500, function () {
-            $('#' + id).slideUp(500);
-        })
+        $('#' + id).slideDown(500).delay(2000).slideUp(500, function () {
+            $('#' + id).remove();
+        });
     }
 
     (function () {
