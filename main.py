@@ -58,7 +58,7 @@ def test_queue():
 
 def main():
     ThreadedSocket().start()
-    app.run(debug=False, host='localhost', port=5000)
+    app.run(debug=False, host='0.0.0.0', port=5000)
     # test_queue()
     pass
     # "START_SESSION"
