@@ -11,5 +11,5 @@ if __name__ == '__main__':
     client, addr = s.accept()
     print("established socket connection")
     while True:
-        data = s.recv(1024).decode('utf-8')
+        data = client.recv(1024).decode('utf-8')
         print("RECEIVED: ", data)
