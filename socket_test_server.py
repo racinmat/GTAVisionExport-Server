@@ -1,15 +1,15 @@
-#client example
+#server example
 import socket
 
 if __name__ == '__main__':
-    # client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client_socket = socket.socket()
+    s = socket.socket()
+    # host = '0.0.0.0'
     host = 'localhost'
-    # host = '127.0.0.1'
-    # host = socket.gethostname()
-    print(host)
-    client_socket.connect((host, 5555))
-    # client_socket.send(b'hello')
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    s.bind((host, 5555))
+    s.listen()
+    client, addr = s.accept()
+    print("established socket connection")
     while True:
-        data = client_socket.recv(512).decode('utf-8')
+        data = s.recv(1024).decode('utf-8')
         print("RECEIVED: ", data)

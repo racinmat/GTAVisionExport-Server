@@ -6,16 +6,17 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 
-class ThreadedSocketServer:
+class ThreadedSocket:
 
     def __init__(self):
         super().__init__()
         self.port = 5555
 
     def start(self):
-        threading.Thread(target=self.start_socket, name='socket_server').start()
+        # threading.Thread(target=self.start_socket_server, name='socket_server').start()
+        threading.Thread(target=self.start_socket_client, name='socket_server').start()
 
-    def start_socket(self):
+    def start_socket_server(self):
         s = socket.socket()
         # host = '0.0.0.0'
         host = 'localhost'
@@ -31,6 +32,19 @@ class ThreadedSocketServer:
             client.send(message.encode('utf-8'))
             q.task_done()
 
+    def start_socket_client(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        host = 'localhost'
+        print(host)
+        s.connect((host, self.port))
+
+        print("connected to socket server")
+        while True:
+            message = q.get()
+            print("taken from queue: ", message)
+            s.send(message.encode('utf-8'))
+            q.task_done()
+
 
 def test_queue():
     q.put('hello')
@@ -43,7 +57,7 @@ def test_queue():
 
 
 def main():
-    ThreadedSocketServer().start()
+    ThreadedSocket().start()
     app.run(debug=False, host='localhost', port=5000)
     # test_queue()
     pass
