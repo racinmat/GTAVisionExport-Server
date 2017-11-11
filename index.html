@@ -69,7 +69,8 @@
     }
 
     (function () {
-        axios.defaults.baseURL = 'http://localhost:5000';
+        var server_name = window.location.host;
+        axios.defaults.baseURL = 'http://' + server_name + ':5000';
 
         $('button').each(function (i, element) {
             element.onclick = function (e) {
