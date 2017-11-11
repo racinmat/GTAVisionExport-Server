@@ -17,17 +17,18 @@ class ThreadedSocketServer:
 
     def start_socket(self):
         s = socket.socket()
-        host = socket.gethostname()
+        # host = '0.0.0.0'
+        host = 'localhost'
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((host, self.port))
 
         s.listen()
         client, addr = s.accept()
-        print("connection established")
+        print("established socket connection")
         while True:
             message = q.get()
-            client.send(message)
-            print(message)
+            print("taken from queue: ", message)
+            client.send(message.encode('utf-8'))
             q.task_done()
 
 
@@ -43,7 +44,7 @@ def test_queue():
 
 def main():
     ThreadedSocketServer().start()
-    app.run(debug=True, host='localhost', port=5000)
+    app.run(debug=False, host='localhost', port=5000)
     # test_queue()
     pass
     # "START_SESSION"
@@ -68,7 +69,7 @@ def index():
 @app.route('/commands', methods=['POST'])
 def add_command():
     data = request.get_json()
-    print(data['command'])
+    print("sent from API: ", data['command'])
     q.put(data['command'])
     return '', 200
 
@@ -79,6 +80,6 @@ def commands():
 
 
 if __name__ == '__main__':
-    q = queue.Queue()
+    q = queue.Queue(0)
     main()
 
