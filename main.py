@@ -52,12 +52,15 @@ class ThreadedSocket:
             q.task_done()
             if message == "GET_SCREEN":
                 # wait for response
-                # data = s.recv(1024).decode('utf-8')
                 data = s.recv(1024)
-                print("got data: {}".format(data))
-                # data = s.recv(1024).decode('utf-8')
-                data = s.recv(1024)
-                print("got data: {}".format(data))
+                # according to https://stackoverflow.com/questions/13514614/why-is-network-byte-order-defined-to-be-big-endian
+                # network byte order is high endian
+                data = int.from_bytes(data, byteorder='big')
+                print("got data last: size: {}".format(data))
+                data = s.recv(1048618)
+                with open('./last_screen.bin', 'wb+') as file:
+                    file.write(data)
+                    print("saved bytes to file")
 
 
 def test_queue():
