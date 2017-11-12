@@ -13,3 +13,6 @@ if __name__ == '__main__':
     while True:
         data = client.recv(1024).decode('utf-8')
         print("RECEIVED: ", data)
+        if data == "GET_SCREEN":
+            client.send("size in bytes".encode('utf-8'))
+            client.send("last".encode('utf-8'))

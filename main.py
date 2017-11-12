@@ -31,6 +31,12 @@ class ThreadedSocket:
             print("taken from queue: ", message)
             client.send(message.encode('utf-8'))
             q.task_done()
+            if message == "GET_SCREEN":
+                # wait for response
+                data = client.recv(1024).decode('utf-8')
+                print("got data: {}".format(data))
+                data = client.recv(1024).decode('utf-8')
+                print("got data: {}".format(data))
 
     def start_socket_client(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -44,6 +50,12 @@ class ThreadedSocket:
             print("taken from queue: ", message)
             s.send(message.encode('utf-8'))
             q.task_done()
+            if message == "GET_SCREEN":
+                # wait for response
+                data = s.recv(1024).decode('utf-8')
+                print("got data: {}".format(data))
+                data = s.recv(1024).decode('utf-8')
+                print("got data: {}".format(data))
 
 
 def test_queue():
