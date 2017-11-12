@@ -1,6 +1,9 @@
-This is socket client for GTAVisionExport. 
+# This is socket client for GTAVisionExport
 GTAVisionExport managed plugin has socket server on port 5555.
 This is webserver + socket client which enables to instruct the managed plugin.
+
+## Installation
+Install all needed libraries by `pip install -r requirements.txt`
 
 ## Accessing it from other devices
 If using WAMP server, just copy `index.html` to some place in `www` directory.
