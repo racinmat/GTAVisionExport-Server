@@ -52,9 +52,11 @@ class ThreadedSocket:
             q.task_done()
             if message == "GET_SCREEN":
                 # wait for response
-                data = s.recv(1024).decode('utf-8')
+                # data = s.recv(1024).decode('utf-8')
+                data = s.recv(1024)
                 print("got data: {}".format(data))
-                data = s.recv(1024).decode('utf-8')
+                # data = s.recv(1024).decode('utf-8')
+                data = s.recv(1024)
                 print("got data: {}".format(data))
 
 
