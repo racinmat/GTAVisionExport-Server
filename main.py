@@ -1,3 +1,4 @@
+import json
 import queue
 import socket
 import threading
@@ -51,15 +52,19 @@ class ThreadedSocket:
                 message, params = message
             print("taken from queue: ", message)
             s.sendall(message.encode('utf-8'))
-            if message == 'SET_TIME':
-                data_len = str(len(params.encode('utf-8')))
-                print("data_len: ", data_len)
-                s.sendall(data_len.encode('utf-8'))
-                data_len_check = s.recv(1024).decode('utf-8')
-                if data_len != data_len_check:
-                    raise Exception("Some shit happened. Data not arrived correctly.")
-                print("params: ", params)
-                s.sendall(params.encode('utf-8'))
+            # if message == 'SET_TIME':
+            #     send_params = s.recv(1024).decode('utf-8')
+            #     if send_params != 'SEND_PARAMS':
+            #         raise Exception("Some shit happened. Data not arrived correctly.")
+            #     print("receied: " + send_params)
+            #     data_len = str(len(params.encode('utf-8')))
+            #     print("data_len: ", data_len)
+            #     s.sendall(data_len.encode('utf-8'))
+            #     data_len_check = s.recv(1024).decode('utf-8')
+            #     if data_len != data_len_check:
+            #         raise Exception("Some shit happened. Data not arrived correctly.")
+            #     print("params: ", params)
+            #     s.sendall(params.encode('utf-8'))
 
             q.task_done()
             # if message == "GET_SCREEN":
@@ -92,7 +97,7 @@ def main():
     if use_web_server:
         app.run(debug=False, host='0.0.0.0', port=5000)
     else:
-        q.put("START_SESSION")
+        q.put(json.dumps({'name': 'START_SESSION'}))
     # "START_SESSION"
     # "STOP_SESSION"
     # "TOGGLE_AUTODRIVE"
@@ -116,7 +121,7 @@ def index():
 def add_command():
     data = request.get_json()
     print("sent from API: ", data['command'])
-    q.put(data['command'])
+    q.put(json.dumps({'name': data['command']}))
     return '', 200
 
 
@@ -125,7 +130,7 @@ def add_time_command():
     data = request.get_json()
     data['command'] = 'SET_TIME'
     print("sent from API: ", data['command'])
-    q.put((data['command'], data['time']))
+    q.put(json.dumps({'name': data['command'], 'time': data['time']}))
     return '', 200
 
 
