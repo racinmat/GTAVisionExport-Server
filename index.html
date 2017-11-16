@@ -15,6 +15,8 @@
     <!-- Bootstrap theme -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
 
+    <!-- for timepicker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/jquery-clockpicker.min.css"/>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -29,7 +31,7 @@
 
     <div id="alerts"></div>
 
-
+    <div id="commands">
     <button type="button" class="btn btn-primary" id="START_SESSION">START_SESSION</button>
     <button type="button" class="btn btn-primary" id="STOP_SESSION">STOP_SESSION</button>
     <button type="button" class="btn btn-primary" id="TOGGLE_AUTODRIVE">TOGGLE_AUTODRIVE</button>
@@ -37,6 +39,12 @@
     <button type="button" class="btn btn-primary" id="AUTOSTART">AUTOSTART</button>
     <button type="button" class="btn btn-primary" id="RELOADGAME">RELOADGAME</button>
     <button type="button" class="btn btn-primary" id="RELOAD">RELOAD</button>
+    </div>
+    <div class="form-group col-xs-4 col-sm-4 col-lg-4" id="time">
+        <label for="time-picker">Time</label>
+        <input id="time-picker" type="text" class="form-control" name="time-picker"/>
+        <button type="button" class="btn btn-primary" id="SET_TIME">SET_TIME</button>
+    </div>
     <!--does not do anything, just fetches the screen, which does not work-->
     <!--<button type="button" class="btn btn-primary" id="GET_SCREEN">GET_SCREEN</button>-->
 
@@ -48,10 +56,16 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
+
+<!-- for moment.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.2/locale/en-gb.js"></script>
+
+<!-- for timepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clockpicker/0.0.7/jquery-clockpicker.min.js"></script>
 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
@@ -70,15 +84,32 @@
     }
 
     (function () {
-        var server_name = window.location.host;
+        var server_name = window.location.hostname;
         axios.defaults.baseURL = 'http://' + server_name + ':5000';
 
-        $('button').each(function (i, element) {
+        $('#time-picker').clockpicker({'donetext': 'Done'});
+
+        $('#commands').find('button').each(function (i, element) {
             element.onclick = function (e) {
                 var text = this.id;
                 console.log(text);
                 axios.post('/commands', {
                     'command': text
+                }).then(function (res) {
+                    console.log('obtained response');
+                    create_alert(text + ' command sent', 'success');
+                }).catch(function (err) {
+                    create_alert('server not responding', 'danger');
+                });
+            };
+        });
+
+        $('#time').find('button').each(function (i, element) {
+            element.onclick = function (e) {
+                var text = this.id;
+                console.log(text);
+                axios.post('/command/time', {
+                    'time': $('#time-picker').val()
                 }).then(function (res) {
                     console.log('obtained response');
                     create_alert(text + ' command sent', 'success');

@@ -16,3 +16,9 @@ if __name__ == '__main__':
         if data == "GET_SCREEN":
             client.send("size in bytes".encode('utf-8'))
             client.send("last".encode('utf-8'))
+        elif data == "SET_TIME":
+            data_size = int(client.recv(1024).decode('utf-8'))
+            client.sendall(str(data_size).encode('utf-8'))
+            print("RECEIVED PARAMS LEN: ", data_size)
+            params = client.recv(data_size).decode('utf-8')
+            print("RECEIVED PARAMS: ", params)

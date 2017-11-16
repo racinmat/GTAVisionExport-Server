@@ -15,28 +15,28 @@ class ThreadedSocket:
     def start(self):
         # threading.Thread(target=self.start_socket_server, name='socket_server').start()
         threading.Thread(target=self.start_socket_client, name='socket_server').start()
-
-    def start_socket_server(self):
-        s = socket.socket()
-        # host = '0.0.0.0'
-        host = 'localhost'
-        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        s.bind((host, self.port))
-
-        s.listen()
-        client, addr = s.accept()
-        print("established socket connection")
-        while True:
-            message = q.get()
-            print("taken from queue: ", message)
-            client.send(message.encode('utf-8'))
-            q.task_done()
-            if message == "GET_SCREEN":
-                # wait for response
-                data = client.recv(1024).decode('utf-8')
-                print("got data: {}".format(data))
-                data = client.recv(1024).decode('utf-8')
-                print("got data: {}".format(data))
+    #
+    # def start_socket_server(self):
+    #     s = socket.socket()
+    #     # host = '0.0.0.0'
+    #     host = 'localhost'
+    #     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    #     s.bind((host, self.port))
+    #
+    #     s.listen()
+    #     client, addr = s.accept()
+    #     print("established socket connection")
+    #     while True:
+    #         message = q.get()
+    #         print("taken from queue: ", message)
+    #         client.send(message.encode('utf-8'))
+    #         q.task_done()
+    #         if message == "GET_SCREEN":
+    #             # wait for response
+    #             data = client.recv(1024).decode('utf-8')
+    #             print("got data: {}".format(data))
+    #             data = client.recv(1024).decode('utf-8')
+    #             print("got data: {}".format(data))
 
     def start_socket_client(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -47,20 +47,32 @@ class ThreadedSocket:
         print("connected to socket server")
         while True:
             message = q.get()
+            if type(message) is tuple:
+                message, params = message
             print("taken from queue: ", message)
-            s.send(message.encode('utf-8'))
+            s.sendall(message.encode('utf-8'))
+            if message == 'SET_TIME':
+                data_len = str(len(params.encode('utf-8')))
+                print("data_len: ", data_len)
+                s.sendall(data_len.encode('utf-8'))
+                data_len_check = s.recv(1024).decode('utf-8')
+                if data_len != data_len_check:
+                    raise Exception("Some shit happened. Data not arrived correctly.")
+                print("params: ", params)
+                s.sendall(params.encode('utf-8'))
+
             q.task_done()
-            if message == "GET_SCREEN":
-                # wait for response
-                data_len = s.recv(1024)
-                # according to https://stackoverflow.com/questions/13514614/why-is-network-byte-order-defined-to-be-big-endian
-                # network byte order is high endian
-                data_len_int = int.from_bytes(data_len, byteorder='big')
-                print("got data last: size: {}".format(data_len_int))
-                data = s.recv(data_len_int)
-                with open('./last_screen.bin', 'wb+') as file:
-                    file.write(data)
-                    print("saved bytes to file")
+            # if message == "GET_SCREEN":
+            #     # wait for response
+            #     data_len = s.recv(1024)
+            #     # according to https://stackoverflow.com/questions/13514614/why-is-network-byte-order-defined-to-be-big-endian
+            #     # network byte order is high endian
+            #     data_len_int = int.from_bytes(data_len, byteorder='big')
+            #     print("got data last: size: {}".format(data_len_int))
+            #     data = s.recv(data_len_int)
+            #     with open('./last_screen.bin', 'wb+') as file:
+            #         file.write(data)
+            #         print("saved bytes to file")
 
 
 def test_queue():
@@ -74,10 +86,13 @@ def test_queue():
 
 
 def main():
+    # use_web_server = False
+    use_web_server = True
     ThreadedSocket().start()
-    app.run(debug=False, host='0.0.0.0', port=5000)
-    # test_queue()
-    pass
+    if use_web_server:
+        app.run(debug=False, host='0.0.0.0', port=5000)
+    else:
+        q.put("START_SESSION")
     # "START_SESSION"
     # "STOP_SESSION"
     # "TOGGLE_AUTODRIVE"
@@ -102,6 +117,15 @@ def add_command():
     data = request.get_json()
     print("sent from API: ", data['command'])
     q.put(data['command'])
+    return '', 200
+
+
+@app.route('/command/time', methods=['POST'])
+def add_time_command():
+    data = request.get_json()
+    data['command'] = 'SET_TIME'
+    print("sent from API: ", data['command'])
+    q.put((data['command'], data['time']))
     return '', 200
 
 
