@@ -1,0 +1,8 @@
+version: '3'
+services:
+  www:
+    image: httpd:alpine
+    volumes:
+      - "./index.html:/usr/local/apache2/htdocs/index.html:ro"
+    ports:
+      - 8082:80

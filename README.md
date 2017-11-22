@@ -15,3 +15,5 @@ If using WAMP server, just copy `index.html` to some place in `www` directory.
 Then, if you can not access it from other device in local site (`192.168.0.*` address)
 Modify both `httpd.conf` and `httpd-vhosts.conf`
 and put `Require ip 192.168.0` right after the `Require local` line, wherever it is.
+
+Id you are using docker, you can set up apache web server on 8082 port by `docker-compose up`
