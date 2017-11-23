@@ -39,11 +39,22 @@ class ThreadedSocket:
     #             data = client.recv(1024).decode('utf-8')
     #             print("got data: {}".format(data))
 
+    def wait_to_connect(self, s, host):
+        connected = False
+        while not connected:
+            print("waiting for connection to server")
+            try:
+                s.connect((host, self.port))
+                connected = True
+                print("connected")
+            except ConnectionRefusedError as e:
+                time.sleep(5)
+
     def start_socket_client(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         host = 'localhost'
         print(host)
-        s.connect((host, self.port))
+        self.wait_to_connect(s, host)
 
         print("connected to socket server")
         while True:
