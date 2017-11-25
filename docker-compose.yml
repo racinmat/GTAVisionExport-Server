@@ -6,3 +6,10 @@ services:
       - "./index.html:/usr/local/apache2/htdocs/index.html:ro"
     ports:
       - 8082:80
+
+  gallery:
+    image: docwhat/image-gallery
+    volumes:
+      - "./../output/rgb-jpeg:/images:ro"
+    ports:
+      - 8083:80
