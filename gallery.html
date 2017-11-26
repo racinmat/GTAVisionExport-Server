@@ -312,43 +312,46 @@
 // execute above function
         initPhotoSwipeFromDOM('.my-gallery');
 
-            var server_name = window.location.hostname;
-            axios.defaults.baseURL = 'http://' + server_name + ':5000';
+        var server_name = window.location.hostname;
+        axios.defaults.baseURL = 'http://' + server_name + ':5000';
 
-            $('#pagination').pagination({
-                dataSource: function (done) {
-                    axios.get('/gallery/list').then(function (res) {
-                        done(res.data);
-                    });
-                },
-                locator: 'items',
-                totalNumberLocator: function () {
-                    axios.get('/gallery/count').then(function (res) {
+        $('#pagination').pagination({
+            dataSource: function (done) {
+                axios.get('/gallery/list').then(function (res) {
+                    done(res.data);
+                });
+            },
+            locator: 'items',
+            totalNumberLocator: function () {
+                axios.get('/gallery/count').then(function (res) {
 //                    console.log("res.data");
 //                    console.log(res.data);
-                        return res.data
-                    });
-                },
-                pageSize: 40,
-                ajax: {
-                    beforeSend: function () {
+                    return res.data
+                });
+            },
+            pageSize: 40,
+            showGoInput: true,
+            showGoButton: true,
+
+            ajax: {
+                beforeSend: function () {
 //                        var dataContainer = $('.data-container');
-                        var dataContainer = $('.my-gallery');
-                        dataContainer.html('Loading data from Server');
-                    }
-                },
-                callback: function (data, pagination) {
-//                    var dataContainer = $('.data-container');
                     var dataContainer = $('.my-gallery');
-
-                    // template method of yourself
-                    var html = template(data);
-                    dataContainer.html(html);
-                    initPhotoSwipeFromDOM('.my-gallery');
-
+                    dataContainer.html('Loading data from Server');
                 }
+            },
+            callback: function (data, pagination) {
+//                    var dataContainer = $('.data-container');
+                var dataContainer = $('.my-gallery');
 
-            })
+                // template method of yourself
+                var html = template(data);
+                dataContainer.html(html);
+                initPhotoSwipeFromDOM('.my-gallery');
+
+            }
+
+        })
 
     })();
 
