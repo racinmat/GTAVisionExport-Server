@@ -10,131 +10,310 @@
 
     <title>GTA V extracted images gallery</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" rel="stylesheet">
-
     <!--http://pagination.js.org/-->
     <link href="http://pagination.js.org/dist/2.1.0/pagination.css" rel="stylesheet">
 
-    <link rel='stylesheet prefetch' href='https://cdn.jsdelivr.net/lightgallery/latest/css/lightgallery.css'>
-    <link rel="stylesheet" href="css/gallery.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.css'>
+    <link rel='stylesheet'
+          href='https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/default-skin/default-skin.min.css'>
+    <link rel="stylesheet" href="css/photoswipe.css">
 
 </head>
 
 <body>
-<div class="page-head">
 
-    <div class="demo-gallery">
-        <ul id="light2gallery">
-            <li data-src="https://sachinchoolur.github.io/lightGallery/static/img/1-1600.jpg">
-                <a href="">
-                    <img class="img-responsive"
-                         src="https://sachinchoolur.github.io/lightGallery/static/img/thumb-1.jpg">
-                </a>
-            </li>
-            <li data-src="https://sachinchoolur.github.io/lightGallery/static/img/2-1600.jpg">
-                <a href="">
-                    <img class="img-responsive"
-                         src="https://sachinchoolur.github.io/lightGallery/static/img/thumb-2.jpg">
-                </a>
-            </li>
-            <li data-src="https://sachinchoolur.github.io/lightGallery/static/img/13-1600.jpg">
-                <a href="">
-                    <img class="img-responsive"
-                         src="https://sachinchoolur.github.io/lightGallery/static/img/thumb-13.jpg">
-                </a>
-            </li>
-            <li data-src="https://sachinchoolur.github.io/lightGallery/static/img/4-1600.jpg">
-                <a href="">
-                    <img class="img-responsive"
-                         src="https://sachinchoolur.github.io/lightGallery/static/img/thumb-4.jpg">
-                </a>
-            </li>
-        </ul>
+<div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+</div>
+
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe.
+         It's a separate element, as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+        <!-- don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
     </div>
 
-    <!--<div class="container theme-showcase" role="main">-->
-    <div class="demo-gallery">
-        <ul id="lightgallery">
-            <li data-src="img\info-2017-11-24--15-08-06--215-0.jpg"><a href=""><img class="img-responsive"
-                                                                                    style="height: 200px; width: 300px"
-                                                                                    src="img\info-2017-11-24--15-08-06--215-0.jpg">
-            </a></li>
-            <li data-src="img\info-2017-11-24--15-08-11--502-0.jpg"><a href=""><img class="img-responsive"
-                                                                                    style="height: 200px; width: 300px"
-                                                                                    src="img\info-2017-11-24--15-08-11--502-0.jpg">
-            </a></li>
-            <li data-src="img\info-2017-11-24--15-08-13--333-0.jpg"><a href=""><img class="img-responsive"
-                                                                                    style="height: 200px; width: 300px"
-                                                                                    src="img\info-2017-11-24--15-08-13--333-0.jpg">
-            </a></li>
-            <li data-src="img\info-2017-11-24--15-08-15--145-0.jpg"><a href=""><img class="img-responsive"
-                                                                                    style="height: 200px; width: 300px"
-                                                                                    src="img\info-2017-11-24--15-08-15--145-0.jpg">
-            </a></li>
-            <li data-src="img\info-2017-11-24--15-08-17--066-0.jpg"><a href=""><img class="img-responsive"
-                                                                                    style="height: 200px; width: 300px"
-                                                                                    src="img\info-2017-11-24--15-08-17--066-0.jpg">
-            </a></li>
-            <li data-src="img\info-2017-11-24--15-08-18--940-0.jpg"><a href=""><img class="img-responsive"
-                                                                                    style="height: 200px; width: 300px"
-                                                                                    src="img\info-2017-11-24--15-08-18--940-0.jpg">
-            </a></li>
-            <li data-src="img\info-2017-11-24--15-09-55--192-0.jpg"><a href=""><img class="img-responsive"
-                                                                                    style="height: 200px; width: 300px"
-                                                                                    src="img\info-2017-11-24--15-09-55--192-0.jpg">
-            </a></li>
-            <li data-src="img\info-2017-11-24--15-09-57--365-0.jpg"><a href=""><img class="img-responsive"
-                                                                                    style="height: 200px; width: 300px"
-                                                                                    src="img\info-2017-11-24--15-09-57--365-0.jpg">
-            </a></li>
-        </ul>
-    </div>
+</div>
 
-    <div class="data-container"></div>
-    <div id="pagination">
-    </div>
-    <!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+<div class="data-container"></div>
+<div id="pagination">
+</div>
+<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/photoswipe/4.1.1/photoswipe-ui-default.min.js'></script>
 
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="https://maxcdn.bootstrapcdn.com/js/ie10-viewport-bug-workaround.js"></script>
+<!--http://pagination.js.org/-->
+<script src="http://pagination.js.org/dist/2.1.0/pagination.min.js"></script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    (function () {
+        var initPhotoSwipeFromDOM = function (gallerySelector) {
+
+            // parse slide data (url, title, size ...) from DOM elements
+            // (children of gallerySelector)
+            var parseThumbnailElements = function (el) {
+                var thumbElements = el.childNodes,
+                    numNodes = thumbElements.length,
+                    items = [],
+                    figureEl,
+                    linkEl,
+                    size,
+                    item;
+
+                for (var i = 0; i < numNodes; i++) {
+
+                    figureEl = thumbElements[i]; // <figure> element
+
+                    // include only element nodes
+                    if (figureEl.nodeType !== 1) {
+                        continue;
+                    }
+
+                    linkEl = figureEl.children[0]; // <a> element
+
+                    size = linkEl.getAttribute('data-size').split('x');
+
+                    // create slide object
+                    item = {
+                        src: linkEl.getAttribute('href'),
+                        w: parseInt(size[0], 10),
+                        h: parseInt(size[1], 10)
+                    };
 
 
-    <script src='https://cdn.jsdelivr.net/picturefill/2.3.1/picturefill.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/g/lightgallery@1.3.5,lg-fullscreen@1.0.1,lg-hash@1.0.1,lg-pager@1.0.1,lg-share@1.0.1,lg-thumbnail@1.0.1,lg-video@1.0.1,lg-autoplay@1.0.1,lg-zoom@1.0.3'></script>
+                    if (figureEl.children.length > 1) {
+                        // <figcaption> content
+                        item.title = figureEl.children[1].innerHTML;
+                    }
 
-    <!--http://pagination.js.org/-->
-    <script src="http://pagination.js.org/dist/2.1.0/pagination.min.js"></script>
+                    if (linkEl.children.length > 0) {
+                        // <img> thumbnail element, retrieving thumbnail url
+                        item.msrc = linkEl.children[0].getAttribute('src');
+                    }
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        (function () {
-            $('#light2gallery').lightGallery({
-                mode: 'lg-fade'
-            });
-            $('#lightgallery').lightGallery({
-                mode: 'lg-fade'
-            });
+                    item.el = figureEl; // save link to element for getThumbBoundsFn
+                    items.push(item);
+                }
+
+                return items;
+            };
+
+            // find nearest parent element
+            var closest = function closest(el, fn) {
+                return el && ( fn(el) ? el : closest(el.parentNode, fn) );
+            };
+
+            // triggers when user clicks on thumbnail
+            var onThumbnailsClick = function (e) {
+                e = e || window.event;
+                e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
+                var eTarget = e.target || e.srcElement;
+
+                // find root element of slide
+                var clickedListItem = closest(eTarget, function (el) {
+                    return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+                });
+
+                if (!clickedListItem) {
+                    return;
+                }
+
+                // find index of clicked item by looping through all child nodes
+                // alternatively, you may define index via data- attribute
+                var clickedGallery = clickedListItem.parentNode,
+                    childNodes = clickedListItem.parentNode.childNodes,
+                    numChildNodes = childNodes.length,
+                    nodeIndex = 0,
+                    index;
+
+                for (var i = 0; i < numChildNodes; i++) {
+                    if (childNodes[i].nodeType !== 1) {
+                        continue;
+                    }
+
+                    if (childNodes[i] === clickedListItem) {
+                        index = nodeIndex;
+                        break;
+                    }
+                    nodeIndex++;
+                }
+
+
+                if (index >= 0) {
+                    // open PhotoSwipe if valid index found
+                    openPhotoSwipe(index, clickedGallery);
+                }
+                return false;
+            };
+
+            // parse picture index and gallery index from URL (#&pid=1&gid=2)
+            var photoswipeParseHash = function () {
+                var hash = window.location.hash.substring(1),
+                    params = {};
+
+                if (hash.length < 5) {
+                    return params;
+                }
+
+                var vars = hash.split('&');
+                for (var i = 0; i < vars.length; i++) {
+                    if (!vars[i]) {
+                        continue;
+                    }
+                    var pair = vars[i].split('=');
+                    if (pair.length < 2) {
+                        continue;
+                    }
+                    params[pair[0]] = pair[1];
+                }
+
+                if (params.gid) {
+                    params.gid = parseInt(params.gid, 10);
+                }
+
+                return params;
+            };
+
+            var openPhotoSwipe = function (index, galleryElement, disableAnimation, fromURL) {
+                var pswpElement = document.querySelectorAll('.pswp')[0],
+                    gallery,
+                    options,
+                    items;
+
+                items = parseThumbnailElements(galleryElement);
+
+                // define options (if needed)
+                options = {
+
+                    // define gallery index (for URL)
+                    galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                    getThumbBoundsFn: function (index) {
+                        // See Options -> getThumbBoundsFn section of documentation for more info
+                        var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                            pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                            rect = thumbnail.getBoundingClientRect();
+
+                        return {x: rect.left, y: rect.top + pageYScroll, w: rect.width};
+                    }
+
+                };
+
+                // PhotoSwipe opened from URL
+                if (fromURL) {
+                    if (options.galleryPIDs) {
+                        // parse real index when custom PIDs are used
+                        // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                        for (var j = 0; j < items.length; j++) {
+                            if (items[j].pid == index) {
+                                options.index = j;
+                                break;
+                            }
+                        }
+                    } else {
+                        // in URL indexes start from 1
+                        options.index = parseInt(index, 10) - 1;
+                    }
+                } else {
+                    options.index = parseInt(index, 10);
+                }
+
+                // exit if index not found
+                if (isNaN(options.index)) {
+                    return;
+                }
+
+                if (disableAnimation) {
+                    options.showAnimationDuration = 0;
+                }
+
+                // Pass data to PhotoSwipe and initialize it
+                gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+                gallery.init();
+            };
+
+            // loop through all gallery elements and bind events
+            var galleryElements = document.querySelectorAll(gallerySelector);
+
+            for (var i = 0, l = galleryElements.length; i < l; i++) {
+                galleryElements[i].setAttribute('data-pswp-uid', i + 1);
+                galleryElements[i].onclick = onThumbnailsClick;
+            }
+
+            // Parse URL and open gallery if it contains #&pid=3&gid=1
+            var hashData = photoswipeParseHash();
+            if (hashData.pid && hashData.gid) {
+                openPhotoSwipe(hashData.pid, galleryElements[hashData.gid - 1], true, true);
+            }
+        };
+
+// execute above function
+        initPhotoSwipeFromDOM('.my-gallery');
 
             var server_name = window.location.hostname;
             axios.defaults.baseURL = 'http://' + server_name + ':5000';
-
-            $('#commands').find('button').each(function (i, element) {
-                element.onclick = function (e) {
-                    var text = this.id;
-//                console.log(text);
-                };
-            });
 
             $('#pagination').pagination({
                 dataSource: function (done) {
@@ -150,52 +329,44 @@
                         return res.data
                     });
                 },
-                pageSize: 10,
+                pageSize: 20,
                 ajax: {
                     beforeSend: function () {
 //                        var dataContainer = $('.data-container');
-                        var dataContainer = $('#lightgallery');
+                        var dataContainer = $('.my-gallery');
                         dataContainer.html('Loading data from Server');
                     }
                 },
                 callback: function (data, pagination) {
 //                    var dataContainer = $('.data-container');
-                    var dataContainer = $('#lightgallery');
+                    var dataContainer = $('.my-gallery');
 
                     // template method of yourself
                     var html = template(data);
                     dataContainer.html(html);
-                    reload_js('https://cdn.jsdelivr.net/g/lightgallery@1.3.5,lg-fullscreen@1.0.1,lg-hash@1.0.1,lg-pager@1.0.1,lg-share@1.0.1,lg-thumbnail@1.0.1,lg-video@1.0.1,lg-autoplay@1.0.1,lg-zoom@1.0.3');
-                    $('#lightgallery').lightGallery({
-                        mode: 'lg-fade'
-                    });
+                    initPhotoSwipeFromDOM('.my-gallery');
 
                 }
 
             })
 
-        })();
+    })();
 
-        function reload_js(src) {
-            $('script[src="' + src + '"]').remove();
-            $('<script>').attr('src', src).appendTo('head');
-        }
-
-
-        function template(data) {
+    function template(data) {
 //        console.log(data);
-            var html = '';
-            $.each(data, function (index, item) {
-                html += '<li data-src="' + item + '">' +
-                    '<a href="">' +
-                    '<img class="img-responsive" style="height: 200px; width: 300px" src="' + item + '">\n' +
-                    '<\/a>' +
-                    '<\/li>';
-            });
+        var html = '';
+        $.each(data, function (index, item) {
+            html += '<figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">' +
+                '<a href="' + item + '" itemprop="contentUrl" data-size="1024x683">' +
+                '<img src="' + item + '" itemprop="thumbnail" alt="Image description"/>' +
+                '<\/a>' +
+                '<figcaption itemprop="caption description">Image caption 3<\/figcaption>' +
+                '<\/figure>';
+        });
 //        console.log(html);
-            return html;
-        }
+        return html;
+    }
 
-    </script>
+</script>
 </body>
 </html>
