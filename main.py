@@ -166,7 +166,7 @@ def gallery_list():
 
 if __name__ == '__main__':
     q = queue.Queue(0)
-    # images_dir = 'D:\\GTAV_extraction_output\\rgb-jpeg'
-    images_dir = 'D:\\projekty\\GTA-V-extractors\\output\\rgb-jpeg'
+    images_dir = 'D:\\GTAV_extraction_output\\rgb-jpeg'
+    # images_dir = 'D:\\projekty\\GTA-V-extractors\\output\\rgb-jpeg'
     main()
 
