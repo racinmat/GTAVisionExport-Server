@@ -3,6 +3,8 @@ import queue
 import socket
 import threading
 import time
+
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -104,7 +106,7 @@ def test_queue():
 def main():
     # use_web_server = False
     use_web_server = True
-    ThreadedSocket().start()
+    # ThreadedSocket().start()
     if use_web_server:
         app.run(debug=False, host='0.0.0.0', port=5000)
     else:
@@ -150,7 +152,21 @@ def commands():
     return 'send commands here by post', 200
 
 
+@app.route('/gallery/count', methods=['GET'])
+def gallery_count():
+    return str(len(os.listdir(images_dir))), 200
+
+
+@app.route('/gallery/list', methods=['GET'])
+def gallery_list():
+    # files = list(os.listdir(images_dir))
+    files = list([os.path.join('img', i) for i in os.listdir(images_dir)])
+    return json.dumps(files), 200
+
+
 if __name__ == '__main__':
     q = queue.Queue(0)
+    # images_dir = 'D:\\GTAV_extraction_output\\rgb-jpeg'
+    images_dir = 'D:\\projekty\\GTA-V-extractors\\output\\rgb-jpeg'
     main()
 
