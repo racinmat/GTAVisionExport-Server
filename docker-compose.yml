@@ -11,3 +11,4 @@ services:
       - "D:\\GTAV_extraction_output\\rgb-jpeg:/usr/local/apache2/htdocs/img:ro"
     ports:
       - 8082:80
+    restart: always
