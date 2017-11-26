@@ -95,7 +95,15 @@
 <div class="data-container"></div>
 <div id="pagination">
 </div>
-<!--</div> &lt;!&ndash; /container &ndash;&gt;-->
+<div class="paginationjs">
+    Set images per page:
+    <div class="paginationjs-page-input">
+        <input type="text" class="J-paginationjs-pagenumber" title="Images per page">
+    </div>
+    <div class="paginationjs-page-button">
+        <input type="button" class="J-paginationjs-button" value="Set">
+    </div>
+</div>
 
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
@@ -108,6 +116,12 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
     (function () {
+        $('.paginationjs-page-button>input[type=button]').on('click', function () {
+            console.log($('.paginationjs-page-input>input').val());
+            initPagination($('.paginationjs-page-input>input').val());
+            initPhotoSwipeFromDOM('.my-gallery');
+        });
+
         var initPhotoSwipeFromDOM = function (gallerySelector) {
 
             // parse slide data (url, title, size ...) from DOM elements
@@ -315,43 +329,49 @@
         var server_name = window.location.hostname;
         axios.defaults.baseURL = 'http://' + server_name + ':5000';
 
-        $('#pagination').pagination({
-            dataSource: function (done) {
-                axios.get('/gallery/list').then(function (res) {
-                    done(res.data);
-                });
-            },
-            locator: 'items',
-            totalNumberLocator: function () {
-                axios.get('/gallery/count').then(function (res) {
+        function initPagination(pageSize) {
+            $('#pagination').pagination({
+                dataSource: function (done) {
+                    axios.get('/gallery/list').then(function (res) {
+                        done(res.data);
+                    });
+                },
+                locator: 'items',
+                totalNumberLocator: function () {
+                    axios.get('/gallery/count').then(function (res) {
 //                    console.log("res.data");
 //                    console.log(res.data);
-                    return res.data
-                });
-            },
-            pageSize: 40,
-            showGoInput: true,
-            showGoButton: true,
+                        return res.data
+                    });
+                },
+                pageSize: pageSize,
+                pageRange: 6,
+                showGoInput: true,
+                showGoButton: true,
 
-            ajax: {
-                beforeSend: function () {
+                ajax: {
+                    beforeSend: function () {
 //                        var dataContainer = $('.data-container');
-                    var dataContainer = $('.my-gallery');
-                    dataContainer.html('Loading data from Server');
-                }
-            },
-            callback: function (data, pagination) {
+                        var dataContainer = $('.my-gallery');
+                        dataContainer.html('Loading data from Server');
+                    }
+                },
+                callback: function (data, pagination) {
 //                    var dataContainer = $('.data-container');
-                var dataContainer = $('.my-gallery');
+                    var dataContainer = $('.my-gallery');
 
-                // template method of yourself
-                var html = template(data);
-                dataContainer.html(html);
-                initPhotoSwipeFromDOM('.my-gallery');
+                    // template method of yourself
+                    var html = template(data);
+                    dataContainer.html(html);
+                    initPhotoSwipeFromDOM('.my-gallery');
 
-            }
+                }
 
-        })
+            })
+        }
+
+        initPagination(40);
+
 
     })();
 
