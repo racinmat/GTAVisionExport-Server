@@ -107,7 +107,10 @@ def test_queue():
 def main():
     # use_web_server = False
     use_web_server = True
-    # ThreadedSocket().start()
+    # connect_to_gta = True
+    connect_to_gta = False
+    if connect_to_gta:
+        ThreadedSocket().start()
     if use_web_server:
         app.run(debug=False, host='0.0.0.0', port=5000)
     else:
@@ -176,6 +179,6 @@ def gallery_list():
 
 if __name__ == '__main__':
     q = queue.Queue(0)
-    images_dir = 'D:\\projekty\\GTA-V-extractors\\output\\rgb-jpeg'
-    # images_dir = 'D:\\GTAV_extraction_output\\rgb-jpeg'
+    # images_dir = 'D:\\projekty\\GTA-V-extractors\\output\\rgb-jpeg'
+    images_dir = 'D:\\GTAV_extraction_output\\rgb-jpeg'
     main()
