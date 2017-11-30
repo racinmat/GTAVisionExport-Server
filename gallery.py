@@ -4,11 +4,15 @@ import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import paginate
+import ssl
 
 
 def main():
-    app.run(debug=False, host='0.0.0.0', port=5001)
+    app.run(debug=False, host='0.0.0.0', port=5001, ssl_context=context)
 
+
+context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+context.load_cert_chain('./nginx-ext/cert.pem', './nginx-ext/key.pem')
 
 app = Flask(__name__)
 CORS(app)
