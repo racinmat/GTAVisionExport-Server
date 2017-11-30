@@ -13,21 +13,27 @@ def main():
 app = Flask(__name__)
 CORS(app)
 
+total = None
+all_files = None
+
 
 @app.route('/gallery/list', methods=['GET'])
 def gallery_list():
-    total = str(len(os.listdir(images_dir)))
+    global total, all_files
+    if total is None:
+        total = str(len(os.listdir(images_dir)))
+    if all_files is None:
+        all_files = list([os.path.join('img', i) for i in os.listdir(images_dir)])
+
     page_number = request.args.get('pageNumber')
     page_size = request.args.get('pageSize')
+
     if page_number is not None and page_size is not None:
         print("paginated, number: {}, size: {}".format(page_number, page_size))
-        files = list(os.listdir(images_dir))
-        files = paginate.Page(files, page=int(page_number), items_per_page=int(page_size)).items
-        files = list([os.path.join('img', i) for i in files])
+        files = paginate.Page(all_files, page=int(page_number), items_per_page=int(page_size)).items
         return json.dumps({'items': files, 'total': total}), 200
     else:
-        files = list([os.path.join('img', i) for i in os.listdir(images_dir)])
-        return json.dumps({'items': files, 'total': total}), 200
+        return json.dumps({'items': all_files, 'total': total}), 200
 
 
 if __name__ == '__main__':
