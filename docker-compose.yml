@@ -25,7 +25,7 @@ services:
     restart: always
 
   nginx-https:
-    image: marvambass/nginx-ssl-secure
+    build: ./nginx-http2-build
     volumes:
       - "./index.html:/usr/share/nginx/html/index.html:ro"
       - "./gallery.html:/usr/share/nginx/html/gallery.html:ro"
