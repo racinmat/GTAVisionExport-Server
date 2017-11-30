@@ -39,4 +39,3 @@ services:
       - 443:443
     environment:
       - DH_SIZE=512
-    restart: always
