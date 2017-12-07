@@ -5,6 +5,8 @@ import threading
 import time
 
 import os
+
+import ssl
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import paginate
@@ -112,7 +114,7 @@ def main():
     if connect_to_gta:
         ThreadedSocket().start()
     if use_web_server:
-        app.run(debug=False, host='0.0.0.0', port=5000)
+        app.run(debug=False, host='0.0.0.0', port=5000, ssl_context=context)
     else:
         q.put(json.dumps({'name': 'START_SESSION'}))
     # "START_SESSION"
@@ -124,6 +126,9 @@ def main():
     # "RELOAD"
     # "GET_SCREEN"
 
+
+context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+context.load_cert_chain('./nginx-ext/cert.pem', './nginx-ext/key.pem')
 
 app = Flask(__name__)
 CORS(app)
@@ -148,6 +153,15 @@ def add_time_command():
     data['command'] = 'SET_TIME'
     print("sent from API: ", data['command'])
     q.put(json.dumps({'name': data['command'], 'time': data['time']}))
+    return '', 200
+
+
+@app.route('/command/weather', methods=['POST'])
+def add_weather_command():
+    data = request.get_json()
+    data['command'] = 'SET_WEATHER'
+    print("sent from API: ", data['command'])
+    q.put(json.dumps({'name': data['command'], 'weather': data['weather']}))
     return '', 200
 
 
