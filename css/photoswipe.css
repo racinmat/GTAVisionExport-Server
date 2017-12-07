@@ -16,8 +16,13 @@
   display: none;
 }
 
+.paginationjs .paginationjs-my-button,.paginationjs .paginationjs-my-input {
+    float: left;
+    margin-left: 10px;
+    font-size: 14px;
+}
 
-.paginationjs .paginationjs-page-input>input[type=text] {
+.paginationjs .paginationjs-my-input>input[type=text] {
     width: 30px;
     height: 28px;
     background: #fff;
@@ -32,7 +37,7 @@
     box-sizing: initial
 }
 
-.paginationjs .paginationjs-page-button>input[type=button] {
+.paginationjs .paginationjs-my-button>input[type=submit] {
     min-width: 40px;
     height: 30px;
     line-height: 28px;

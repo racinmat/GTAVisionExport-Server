@@ -5,7 +5,16 @@ MAINTAINER Dylan Wang "wanghaoyu@frazil.me"
 
 ENV NGINX_VERSION 1.9.6
 
-RUN apt-get update && apt-get install -y ca-certificates build-essential wget libpcre3 libpcre3-dev zlib1g zlib1g-dev libssl-dev
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    build-essential \
+    wget \
+    libpcre3 \
+    libpcre3-dev \
+    zlib1g \
+    zlib1g-dev \
+    libssl-dev \
+    dos2unix
 
 RUN wget http://www.openssl.org/source/openssl-1.0.2d.tar.gz \
   && tar -xvzf openssl-1.0.2d.tar.gz \
@@ -23,7 +32,8 @@ RUN wget http://www.openssl.org/source/openssl-1.0.2d.tar.gz \
 RUN wget http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz \
   && tar -xzvf nginx-${NGINX_VERSION}.tar.gz
 
-COPY conf /nginx-${NGINX_VERSION}/auto/lib/openssl/
+ADD conf /nginx-${NGINX_VERSION}/auto/lib/openssl/conf
+RUN dos2unix /nginx-${NGINX_VERSION}/auto/lib/openssl/conf
 
 RUN cd nginx-${NGINX_VERSION} \
   && ./configure \
@@ -65,7 +75,9 @@ RUN sed -i 's/access_log.*/access_log \/dev\/stdout;/g' /etc/nginx/nginx.conf; \
     sed -i 's/^pid/daemon off;\npid/g' /etc/nginx/nginx.conf
 
 ADD entrypoint.sh /opt/entrypoint.sh
-RUN chmod a+x /opt/entrypoint.sh
+RUN chmod a+x /opt/entrypoint.sh && \
+    dos2unix /opt/entrypoint.sh
+
 
 ENTRYPOINT ["/opt/entrypoint.sh"]
 CMD ["nginx"]
