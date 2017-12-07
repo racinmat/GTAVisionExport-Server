@@ -41,4 +41,7 @@ services:
       - 8082:443
     environment:
       - DH_SIZE=512
-#    restart: always
+    restart: always
+#    these two are for opening container for bash, without doing anything
+#    stdin_open: true
+#    tty: true

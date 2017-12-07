@@ -49,4 +49,3 @@ cp /etc/nginx/external/*.conf /etc/nginx/conf.d/ 2> /dev/null > /dev/null
 echo ">> exec docker CMD"
 echo "$@"
 exec "$@"
-© 2017 GitHub, Inc.
