@@ -31,13 +31,18 @@ def gallery_list():
 
     page_number = request.args.get('pageNumber')
     page_size = request.args.get('pageSize')
+    stride = int(request.args.get('stride'))
+
+    files = all_files
+    if stride is not None:
+        files = files[::stride]
+        total = str(len(files))
 
     if page_number is not None and page_size is not None:
         print("paginated, number: {}, size: {}".format(page_number, page_size))
-        files = paginate.Page(all_files, page=int(page_number), items_per_page=int(page_size)).items
-        return json.dumps({'items': files, 'total': total}), 200
-    else:
-        return json.dumps({'items': all_files, 'total': total}), 200
+        files = paginate.Page(files, page=int(page_number), items_per_page=int(page_size)).items
+
+    return json.dumps({'items': files, 'total': total}), 200
 
 
 if __name__ == '__main__':
