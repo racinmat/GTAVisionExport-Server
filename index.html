@@ -67,8 +67,13 @@
         </select>
         <button type="button" class="btn btn-primary" id="SET_WEATHER">SET_WEATHER</button>
     </div>
-    <!--does not do anything, just fetches the screen, which does not work-->
-    <!--<button type="button" class="btn btn-primary" id="GET_SCREEN">GET_SCREEN</button>-->
+    <div class="form-group col-xs-4 col-sm-4 col-lg-4" id="time-interval">
+        <label for="interval-from-picker">Time from</label>
+        <input id="interval-from-picker" type="text" class="form-control" name="from-picker"/>
+        <label for="interval-to-picker">Time to</label>
+        <input id="interval-to-picker" type="text" class="form-control" name="to-picker"/>
+        <button type="button" class="btn btn-primary" id="SET_TIME_INTERVAL">SET_TIME_INTERVAL</button>
+    </div>
 
 
 </div> <!-- /container -->
@@ -105,23 +110,29 @@
         });
     }
 
+    function post(endpoint, text, data) {
+        console.log(text);
+        axios.post(endpoint, data).then(function (res) {
+            console.log('obtained response');
+            create_alert(text + ' command sent', 'success');
+        }).catch(function (err) {
+            create_alert('server not responding', 'danger');
+        });
+    }
+
     (function () {
         var server_name = window.location.hostname;
         axios.defaults.baseURL = 'https://' + server_name + ':5000';
 
         $('#time-picker').clockpicker({'donetext': 'Done'});
+        $('#interval-from-picker').clockpicker({'donetext': 'Done'});
+        $('#interval-to-picker').clockpicker({'donetext': 'Done'});
 
         $('#commands').find('button').each(function (i, element) {
             element.onclick = function (e) {
                 var text = this.id;
-                console.log(text);
-                axios.post('/commands', {
+                post('/commands', text, {
                     'command': text
-                }).then(function (res) {
-                    console.log('obtained response');
-                    create_alert(text + ' command sent', 'success');
-                }).catch(function (err) {
-                    create_alert('server not responding', 'danger');
                 });
             };
         });
@@ -129,14 +140,8 @@
         $('#time').find('button').each(function (i, element) {
             element.onclick = function (e) {
                 var text = this.id;
-                console.log(text);
-                axios.post('/command/time', {
+                post('/command/time', text, {
                     'time': $('#time-picker').val()
-                }).then(function (res) {
-                    console.log('obtained response');
-                    create_alert(text + ' command sent', 'success');
-                }).catch(function (err) {
-                    create_alert('server not responding', 'danger');
                 });
             };
         });
@@ -144,14 +149,18 @@
         $('#weather').find('button').each(function (i, element) {
             element.onclick = function (e) {
                 var text = this.id;
-                console.log(text);
-                axios.post('/command/weather', {
+                post('/command/weather', text, {
                     'weather': $('#weather-picker').val()
-                }).then(function (res) {
-                    console.log('obtained response');
-                    create_alert(text + ' command sent', 'success');
-                }).catch(function (err) {
-                    create_alert('server not responding', 'danger');
+                });
+            };
+        });
+
+        $('#time-interval').find('button').each(function (i, element) {
+            element.onclick = function (e) {
+                var text = this.id;
+                post('/command/time_interval', text, {
+                    'time_from': $('#interval-from-picker').val(),
+                    'time_to': $('#interval-to-picker').val()
                 });
             };
         });

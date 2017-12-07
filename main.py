@@ -68,19 +68,6 @@ class ThreadedSocket:
                 message, params = message
             print("taken from queue: ", message)
             s.sendall(message.encode('utf-8'))
-            # if message == 'SET_TIME':
-            #     send_params = s.recv(1024).decode('utf-8')
-            #     if send_params != 'SEND_PARAMS':
-            #         raise Exception("Some shit happened. Data not arrived correctly.")
-            #     print("receied: " + send_params)
-            #     data_len = str(len(params.encode('utf-8')))
-            #     print("data_len: ", data_len)
-            #     s.sendall(data_len.encode('utf-8'))
-            #     data_len_check = s.recv(1024).decode('utf-8')
-            #     if data_len != data_len_check:
-            #         raise Exception("Some shit happened. Data not arrived correctly.")
-            #     print("params: ", params)
-            #     s.sendall(params.encode('utf-8'))
 
             q.task_done()
             # if message == "GET_SCREEN":
@@ -162,6 +149,15 @@ def add_weather_command():
     data['command'] = 'SET_WEATHER'
     print("sent from API: ", data['command'])
     q.put(json.dumps({'name': data['command'], 'weather': data['weather']}))
+    return '', 200
+
+
+@app.route('/command/time_interval', methods=['POST'])
+def add_time_interval_command():
+    data = request.get_json()
+    data['command'] = 'SET_TIME_INTERVAL'
+    print("sent from API: ", data['command'])
+    q.put(json.dumps({'name': data['command'], 'timeFrom': data['time_from'], 'timeTo': data['time_to']}))
     return '', 200
 
 
