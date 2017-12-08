@@ -1,6 +1,7 @@
 import json
 import queue
 import os
+from configparser import ConfigParser
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import paginate
@@ -46,7 +47,7 @@ def gallery_list():
 
 
 if __name__ == '__main__':
-    q = queue.Queue(0)
-    images_dir = 'D:\\projekty\\GTA-V-extractors\\output\\rgb-jpeg'
-    # images_dir = 'D:\\GTAV_extraction_output\\rgb-jpeg'
+    CONFIG = ConfigParser()
+    CONFIG.read("gta-server.ini")
+    images_dir = CONFIG["Images"]["Jpg"]
     main()
