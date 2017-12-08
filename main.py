@@ -96,8 +96,8 @@ def test_queue():
 def main():
     # use_web_server = False
     use_web_server = True
-    # connect_to_gta = True
-    connect_to_gta = False
+    connect_to_gta = True
+    # connect_to_gta = False
     if connect_to_gta:
         ThreadedSocket().start()
     if use_web_server:
