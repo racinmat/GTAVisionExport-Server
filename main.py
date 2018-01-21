@@ -111,7 +111,8 @@ def main():
     # "AUTOSTART"
     # "RELOADGAME"
     # "RELOAD"
-    # "GET_SCREEN"
+    # "PAUSE"
+    # "UNPAUSE"
 
 
 context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
