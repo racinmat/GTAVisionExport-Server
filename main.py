@@ -3,7 +3,6 @@ import queue
 import socket
 import threading
 import time
-
 import os
 
 import ssl
@@ -93,13 +92,17 @@ def test_queue():
     q.put('fuck yeah!')
 
 
+def flask_thread():
+    app.run(debug=False, host='0.0.0.0', port=5000, ssl_context=context)
+
+
 def main():
     # use_web_server = False
     use_web_server = True
     connect_to_gta = True
     # connect_to_gta = False
     if use_web_server:
-        app.run(debug=False, host='0.0.0.0', port=5000, ssl_context=context)
+        threading.Thread(target=flask_thread, name='web_server').start()
     if connect_to_gta:
         ThreadedSocket().start()
     else:
@@ -170,3 +173,4 @@ def commands():
 if __name__ == '__main__':
     q = queue.Queue(0)
     main()
+
