@@ -98,10 +98,10 @@ def main():
     use_web_server = True
     connect_to_gta = True
     # connect_to_gta = False
-    if connect_to_gta:
-        ThreadedSocket().start()
     if use_web_server:
         app.run(debug=False, host='0.0.0.0', port=5000, ssl_context=context)
+    if connect_to_gta:
+        ThreadedSocket().start()
     else:
         q.put(json.dumps({'name': 'START_SESSION'}))
     # "START_SESSION"
