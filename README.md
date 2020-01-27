@@ -1,4 +1,8 @@
 # This is socket client for GTAVisionExport
+
+The server is used with https://github.com/racinmat/GTAVisionExport as part of Matěj Račinský's master thesis, available [here](https://dspace.cvut.cz/handle/10467/76430).
+
+
 GTAVisionExport managed plugin has socket server on port 5555.
 This is webserver + socket client which enables to instruct the managed plugin.
 
